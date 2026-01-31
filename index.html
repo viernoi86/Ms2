@@ -14,7 +14,7 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: Arial, sans-serif;
-  background: #bfbfbf; /* fond gris */
+  background: #bfbfbf;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,15 +30,15 @@ body {
 }
 
 h1 {
-  color: #d00000; /* titre rouge */
+  color: #d00000;
   margin-bottom: 20px;
 }
 
 textarea {
   width: 100%;
   height: 140px;
-  background: #ffffff; /* zone texte blanche */
-  border: 2px solid #d00000; /* contour rouge */
+  background: #ffffff;
+  border: 2px solid #d00000;
   border-radius: 8px;
   padding: 12px;
   font-size: 15px;
@@ -82,7 +82,7 @@ textarea::placeholder {
 #envoyer {
   width: 100%;
   padding: 12px;
-  background: #28a745; /* bouton vert */
+  background: #28a745;
   border: 2px solid #1e7e34;
   border-radius: 8px;
   font-size: 16px;
@@ -108,8 +108,8 @@ textarea::placeholder {
 
   <div class="buttons">
     <button onclick="selectionnerExpediteur(this,'Maman','https://discord.com/api/webhooks/1365373680225488926/MCbBTyzOk2WymcFlD7xxnLsWex38beWIlIJhJull2aywZ01GtxAOP_rtB3lbPHCMPkaH')">Maman</button>
-    <button onclick="selectionnerExpediteur(this,'Papa','https://discord.com/api/webhooks/1365367502586122330/tznyZlteXzlC7r4APfy2cIM8eGkFVa810u2WDuswUQp6hNRyf58sh1-BXopRFS3DY7PG')">Papa</button>
-    <button onclick="selectionnerExpediteur(this,'Paloma','https://discord.com/api/webhooks/1365373655688806440/Q5EvTL4ksguY5BFG9YM6qyp2THTK0vy0J7oFctZ95BPI3tyNcimE-1frLZbx9tfjZ1oJ')">Paloma</button>
+    <button onclick="selectionnerExpediteur(this,'Papa','https://discord.com/api/webhooks/...')">Papa</button>
+    <button onclick="selectionnerExpediteur(this,'Paloma','https://discord.com/api/webhooks/...')">Paloma</button>
   </div>
 
   <div id="expediteur-info">
@@ -119,10 +119,6 @@ textarea::placeholder {
   <button id="envoyer" onclick="envoyerMessage()">📨Envoyer</button>
 </div>
 
-// Ajouter automatiquement les mentions aux utilisateurs dans le message
-      message = `<@982353417093672990> <@1320337476258103336> ${message}`;
-
-  
 <script>
 let expediteurSelectionne = null;
 let webhookSelectionne = null;
@@ -141,7 +137,7 @@ function selectionnerExpediteur(btn, nom, webhook) {
 }
 
 function envoyerMessage() {
-  const message = document.getElementById("message").value;
+  let message = document.getElementById("message").value;
 
   if (!expediteurSelectionne) {
     alert("Veuillez sélectionner un expéditeur.");
@@ -152,6 +148,9 @@ function envoyerMessage() {
     alert("Le message est vide.");
     return;
   }
+
+  // 🔥 AJOUT AUTOMATIQUE DES MENTIONS
+  message = `<@982353417093672990> <@1320337476258103336> ${message}`;
 
   fetch(webhookSelectionne, {
     method: "POST",
